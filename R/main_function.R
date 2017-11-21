@@ -16,10 +16,13 @@
 #' @importFrom Rcpp evalCpp
 #' @return  a named list of raster object
 #' @examples
-#' mapvisit(df, radius = 500, maxtime = 2, time_out = 1, basename = "file", coord.names = c("x","y"), timecol = "dateTime",units ="hour", proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = 250, progress = T)
+#' map_residence(df, radius = 500, maxtime = 2, time_out = 1, basename = "file",
+#' coord.names = c("x","y"), timecol = "dateTime",units ="hour", proj4string =
+#' "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84
+#' +towgs84=0,0,0",cellsize = 250, progress = T)
 #' @export
-
-mapvisit <- function (df, radius = NULL,time_out = NULL, basename = NULL, driver = "GeoTIFF", coord.names = c("x","y"), timecol = "dateTime", grid = NULL, proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = NULL, progress = T) {
+#'
+map_residence <- function(df, radius = NULL,time_out = NULL, basename = NULL, driver = "GeoTIFF", coord.names = c("x","y"), timecol = "dateTime", grid = NULL, proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = NULL, progress = T){
   x = df[,coord.names[1]]
   y = df[,coord.names[2]]
   spdf <- df
