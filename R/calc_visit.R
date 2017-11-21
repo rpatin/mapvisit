@@ -18,6 +18,7 @@
 #' @examples
 #' calc_visit(current_center, spdf ,radius = 500, maxtime = 5, time_out = 2, timecol = "dateTime", units = "hour", proj4string = "+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs")
 #' @importFrom magrittr "%>%"
+#' @useDynLib mapvisit
 #' @export
 # current_center = sfCenter[53,]
 # current_center = sfCenter[1,]
