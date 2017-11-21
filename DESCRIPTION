@@ -11,14 +11,14 @@ Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.0.1
 Depends:
-    R (>= 3.4.0),
-    sp (>= 1.2-3),
+    R (>= 3.0.0),
+    sp,
     raster
 Imports:
-    plyr (>= 1.8.4),
-    dplyr (>= 0.4.3),
-    ggplot2 (>= 2.1.0),
-    rgdal (>= 1.1-10),
+    plyr,
+    dplyr,
+    ggplot2,
+    rgdal,
     gpstools (>= 0.0.0.9000),
     progress,
     sf,

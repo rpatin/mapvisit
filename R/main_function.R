@@ -3,9 +3,7 @@
 #' Creates 4 maps with : number of visit in a given radius, total time spent, mean and median time per visit.
 #' @param df movement data
 #' @param radius for finding residence event
-#' @param maxtime maximum time to consider relocation as successive and add time before first point and after last point proportional to the part of the segment inside the circle.
-#' @param time_out maximum time individuals are allowed to leave the circle without considering a new visit
-#' @param units unit used for maxtime and time_out
+#' @param time_out maximum time (in s) individuals are allowed to leave the circle without considering a new visit.
 #' @param basename rasters will be saved as basename_nvisit.tif,basename_totRT.tif,basename_meanRT.tif,basename_medianRT.tif
 #' @param driver for rasters
 #' @param coord.names coordinate names in df data.frame. default x,y
@@ -14,13 +12,14 @@
 #' @param cellsize if you dont provide any grid argument, size for the cell used for calculations. Else, will generate a grid with 50 cells for the highest dimension.
 #' @param proj4string projection string. Default UTM35S.
 #' @param progress (boolean) should the function display a progress bar
+#' @useDynLib mapvisit
+#' @importFrom Rcpp evalCpp
 #' @return  a named list of raster object
-#' @useDynLib mapvisit calc_visit_c
 #' @examples
 #' mapvisit(df, radius = 500, maxtime = 2, time_out = 1, basename = "file", coord.names = c("x","y"), timecol = "dateTime",units ="hour", proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = 250, progress = T)
 #' @export
 
-mapvisit <- function (df, radius = NULL, maxtime = NULL, time_out = NULL, basename = NULL, driver = "GeoTIFF", coord.names = c("x","y"), timecol = "dateTime", grid = NULL,units ="min", proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = NULL, progress = T) {
+mapvisit <- function (df, radius = NULL,time_out = NULL, basename = NULL, driver = "GeoTIFF", coord.names = c("x","y"), timecol = "dateTime", grid = NULL, proj4string = "+proj=utm +zone=35 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",cellsize = NULL, progress = T) {
   x = df[,coord.names[1]]
   y = df[,coord.names[2]]
   spdf <- df
@@ -70,7 +69,10 @@ mapvisit <- function (df, radius = NULL, maxtime = NULL, time_out = NULL, basena
   # current_center = sfCenter[i,]
   # SEXP calc_visit(SEXP xyt, SEXP xygrid, SEXP distr, SEXP maxt)
   #
-  resRT <-   .Call("calc_visit_c",data.frame(x,y,time=df[,timecol]), spCenter, radius, time_out)
+  resRT <-   calc_visit_cpp(x,y,df[,timecol], spCenter[,1], spCenter[,2], radius, time_out)
+
+  # resRT <-   .Call("calc_visit_c",data.frame(x,y,time=df[,timecol]), spCenter, radius, time_out)
+
 
   # resRT <- calc_visit(current_center,sfdf,radius = radius, maxtime = maxtime, timecol = timecol, units = units,proj4string = proj4string,time_out = time_out)
 # test

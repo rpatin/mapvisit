@@ -2,5 +2,6 @@
 
 export(calc_visit)
 export(mapvisit)
+importFrom(Rcpp,evalCpp)
 importFrom(magrittr,"%>%")
-useDynLib(mapvisit,calc_visit_c)
+useDynLib(mapvisit)
