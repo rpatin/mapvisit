@@ -22,5 +22,7 @@ Imports:
     gpstools (>= 0.0.0.9000),
     progress,
     sf,
-    Rcpp
+    Rcpp,
+    gridExtra,
+    cowplot
 LinkingTo: Rcpp
